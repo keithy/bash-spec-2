@@ -51,18 +51,18 @@ TEST_ENVIRONMENT = PYTHONPATH=$(THIS_FILE_DIR):$$PYTHONPATH PATH=$(THIS_FILE_DIR
 
 define RUN_ONE_TEST
 TARGET_FOR_$(1): $$(FIRST_MAKEFILE_DIR)/$(1)
-   +@if [ -e $$(FIRST_MAKEFILE_DIR)/$$(executedTestsName) ]; then \
-         echo $$< >> $$(FIRST_MAKEFILE_DIR)/$$(executedTestsName); \
-   fi; \
-   $$(TEST_ENVIRONMENT) $$< 2>&1 | sed "s/^/  [$$$$(basename $$<)] /"; test $$$${PIPESTATUS[0]} -eq 0; \
-   if [ $$$$? -eq 0 ]; then \
-      echo " PASSED: $$$$(basename $$<)"; \
-   else \
-      echo " FAILED: $$$$(basename $$<)"; \
-      if [ -e $$(FIRST_MAKEFILE_DIR)/$$(failedTestsName) ]; then \
-         echo $$< >> $$(FIRST_MAKEFILE_DIR)/$$(failedTestsName); \
-      fi; \
-   fi;
+	+@if [ -e $$(FIRST_MAKEFILE_DIR)/$$(executedTestsName) ]; then \
+             echo $$< >> $$(FIRST_MAKEFILE_DIR)/$$(executedTestsName); \
+          fi; \
+          $$(TEST_ENVIRONMENT) $$< 2>&1 | sed "s/^/  [$$$$(basename $$<)] /"; test $$$${PIPESTATUS[0]} -eq 0; \
+          if [ $$$$? -eq 0 ]; then \
+             echo " PASSED: $$$$(basename $$<)"; \
+          else \
+             echo " FAILED: $$$$(basename $$<)"; \
+             if [ -e $$(FIRST_MAKEFILE_DIR)/$$(failedTestsName) ]; then \
+                echo $$< >> $$(FIRST_MAKEFILE_DIR)/$$(failedTestsName); \
+             fi; \
+          fi;
 endef
 
 # Build the above rule to run one test, for all tests.
